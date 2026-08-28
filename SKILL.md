@@ -35,9 +35,11 @@ Announcements API (reference implementation):
 
 - Base: `https://trafikverket-api-production.up.railway.app`
 - Related code: https://github.com/emanuelbodin/trafikverket-api
-- Cancelled: `GET /api/announcements/departures/{station}?canceled=true`
-- Delayed: `GET /api/announcements/departures/{station}?delayed=true`
+- `GET /api/announcements/departures/{station}?from={from}&to={to}&canceled=true`
+- `GET /api/announcements/departures/{station}?from={from}&to={to}&delayed=true`
 - `{station}` is a catalog `code`
+- `from` and `to` are ISO-8601 date-times with offset, e.g. `2026-08-28T00:00:00+02:00` (URL-encode). They filter `AdvertisedTimeAtLocation` (`GT` / `LT`). Always send both. Omitting both means no advertised-time filter. Invalid timestamps or `from` after `to` → 400.
+- Default poll window: now−24h to now+12h in `Europe/Stockholm`.
 
 Each item looks like Trafikverket `TrainAnnouncement`: `advertisedTrainIdent`, `advertisedTimeAtLocation`, `estimatedTimeAtLocation`, `canceled`, `fromName`, `toName`, `toLocation`, `viaToLocation`, `productInformation`, `operator`, `otherInformation`, `trackAtLocation`.
 
