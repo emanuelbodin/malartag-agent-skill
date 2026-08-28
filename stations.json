@@ -1,0 +1,229 @@
+{
+  "data": [
+    {
+      "name": "Arboga",
+      "code": "Arb",
+      "id": "51bae9d5-7357-4bde-b65a-2a6421f6ddaf"
+    },
+    {
+      "name": "Arlanda C",
+      "code": "Arnc",
+      "id": "35dbb7a3-3d2e-4b02-afa1-3d2ecd2dd522"
+    },
+    {
+      "name": "Eskilstuna C",
+      "code": "Et",
+      "id": "d6b57a4b-5e76-48e2-91f0-9dc4200f413a"
+    },
+    {
+      "name": "Flemingsberg",
+      "code": "Flb",
+      "id": "255f89db-d0b2-478c-83bc-2badfbdae1c7"
+    },
+    {
+      "name": "Flen",
+      "code": "Fle",
+      "id": "9266eb15-3e19-4609-8276-f2dd8e29652a"
+    },
+    {
+      "name": "Furuvik",
+      "code": "Fvk",
+      "id": "8751e52c-2214-4c1d-b64b-1d3eefc524b9"
+    },
+    {
+      "name": "Gnesta",
+      "code": "Gn",
+      "id": "11fed1ac-99e8-475e-ad29-bea03ef5468b"
+    },
+    {
+      "name": "Gävle C",
+      "code": "Gä",
+      "id": "c1ed2e95-5cc2-4e9d-a89b-fb27f01ad527"
+    },
+    {
+      "name": "Hallsberg",
+      "code": "Hpbg",
+      "id": "9be010f0-4dab-441d-b186-35a588aae86e"
+    },
+    {
+      "name": "Heby",
+      "code": "Hy",
+      "id": "8e0778d5-074a-41df-9234-a84ab54a279c"
+    },
+    {
+      "name": "Hälleforsnäs",
+      "code": "Hnä",
+      "id": "cc45391c-b5c6-4cae-8244-e27c247dd1b3"
+    },
+    {
+      "name": "Katrineholm C",
+      "code": "K",
+      "id": "3f0a3b44-86e1-48da-9c6a-6a95879409cc"
+    },
+    {
+      "name": "Knivsta",
+      "code": "Kn",
+      "id": "18df975c-61be-4029-94cd-fc565b0da4d9"
+    },
+    {
+      "name": "Kolbäck",
+      "code": "Kbä",
+      "id": "b32a0d80-333d-4132-af1b-3347c7c25932"
+    },
+    {
+      "name": "Kolmården",
+      "code": "Kon",
+      "id": "8276f617-db04-4215-b9ac-a67957ee7037"
+    },
+    {
+      "name": "Kungsör",
+      "code": "Kör",
+      "id": "eb816eb7-19ec-40bc-851c-3b7b24559a86"
+    },
+    {
+      "name": "Kvicksund",
+      "code": "Ksus",
+      "id": "d21e77d1-ba66-4ead-80b5-eb96904a0852"
+    },
+    {
+      "name": "Linköping C",
+      "code": "Lp",
+      "id": "97455149-d0e5-4f76-9692-9b329027db58"
+    },
+    {
+      "name": "Läggesta",
+      "code": "Lg",
+      "id": "60f38bae-43cd-4a45-a7d2-3d872f4fc035"
+    },
+    {
+      "name": "Marma",
+      "code": "Maa",
+      "id": "a363d1db-64ab-4058-8838-2a6dbcd17666"
+    },
+    {
+      "name": "Mehedeby",
+      "code": "Meh",
+      "id": "0a3e54c9-3189-4f1d-8cf7-ecb3a6b6448f"
+    },
+    {
+      "name": "Morgongåva",
+      "code": "Må",
+      "id": "f93f2964-e736-4442-9fa0-78a63b3c555e"
+    },
+    {
+      "name": "Märsta",
+      "code": "Mr",
+      "id": "57d62e84-ab78-437f-bd59-7e5839de3ce4"
+    },
+    {
+      "name": "Norrköping C",
+      "code": "Nr",
+      "id": "eaf9aa85-16d0-408c-9991-b4e7819427c2"
+    },
+    {
+      "name": "Nykvarn",
+      "code": "Nkv",
+      "id": "78958a8a-7543-4b66-bd51-db8d0c0b7d3c"
+    },
+    {
+      "name": "Nyköping C",
+      "code": "Nk",
+      "id": "37dbffb4-519c-4fbd-b8c4-171e0367b848"
+    },
+    {
+      "name": "Ransta",
+      "code": "Rt",
+      "id": "d8d9d78d-f2b9-4705-b3f0-41bbdb0edcae"
+    },
+    {
+      "name": "Sala",
+      "code": "Sl",
+      "id": "12b6bb4b-2c7d-4817-b17f-a42d8593c04a"
+    },
+    {
+      "name": "Skutskär",
+      "code": "Sur",
+      "id": "9523c64f-ab60-477c-807b-2b5c4d068042"
+    },
+    {
+      "name": "Skyttorp",
+      "code": "Syt",
+      "id": "708a1953-dd8c-4740-b857-33d3ea8cbffe"
+    },
+    {
+      "name": "Stockholm Central",
+      "code": "Cst",
+      "id": "f4d25596-a9f9-41a1-b200-713439d92fc4"
+    },
+    {
+      "name": "Storvreta",
+      "code": "Srv",
+      "id": "ddf64ca1-b3b3-4820-94fb-137f17fbefc3"
+    },
+    {
+      "name": "Strängnäs",
+      "code": "Sgs",
+      "id": "83bb841b-f5c7-4faf-bdea-9324c2e4460f"
+    },
+    {
+      "name": "Södertälje Syd",
+      "code": "Söö",
+      "id": "ad5bfd5a-c481-4389-ab1d-1a0200b9475a"
+    },
+    {
+      "name": "Tierp",
+      "code": "Tip",
+      "id": "da730f09-261d-4840-a113-da466fab32e3"
+    },
+    {
+      "name": "Tobo",
+      "code": "Tbo",
+      "id": "f62a8730-cb37-4e76-b827-e6103f27fcc1"
+    },
+    {
+      "name": "Uppsala C",
+      "code": "U",
+      "id": "cf09cbb1-fd82-4b83-9c09-87bc8fc2f018"
+    },
+    {
+      "name": "Vagnhärad",
+      "code": "Vhd",
+      "id": "636fa98b-9ade-45bb-8a5d-e3d715d7a243"
+    },
+    {
+      "name": "Vattholma",
+      "code": "Vha",
+      "id": "1fedd7f3-7ed7-4f57-b94f-f1065710d3c6"
+    },
+    {
+      "name": "Vingåker",
+      "code": "Vr",
+      "id": "820e2727-5d68-47d5-a70e-2af8e3e9a08f"
+    },
+    {
+      "name": "Västerås C",
+      "code": "Vå",
+      "id": "3c7df2d4-ef51-4a24-9e59-305826c0bd44"
+    },
+    {
+      "name": "Älvkarleby",
+      "code": "Äkb",
+      "id": "2db97ae5-18fa-4fd0-9809-1b821b434db7"
+    },
+    {
+      "name": "Örbyhus",
+      "code": "Öh",
+      "id": "288193e1-37f9-4cc7-94f6-c730ce75c98f"
+    },
+    {
+      "name": "Örebro C",
+      "code": "Ör",
+      "id": "83700a23-8407-4831-9c46-41a9ae05d730"
+    },
+    {
+      "name": "Örebro Södra",
+      "code": "Öb",
+      "id": "15b41dab-770b-4611-b855-540373b34a61"
+    }
+  ]
+}
