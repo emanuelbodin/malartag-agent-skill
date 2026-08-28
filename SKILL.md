@@ -2,20 +2,32 @@
 name: Mälartåg delay watch
 description: >
   Use this when checking cancelled or delayed Mälartåg via a Trafikverket
-  announcements API, alerting a commuter on the Stockholm–Uppsala–Gävle
-  corridor (or a similar corridor), and filing delay compensation only after
-  the user explicitly approves that trip.
+  announcements API, alerting a commuter on any Mälartåg station (or a subset
+  they named), and filing delay compensation only after the user explicitly
+  approves that trip.
 ---
 
 # Mälartåg delay watch
 
-Watch cancelled and delayed Mälartåg, ping the user only when something new happens on their corridor, and file delay compensation only after they approve that specific trip.
+Watch cancelled and delayed Mälartåg anywhere on the network, ping the user only when something new happens on the stations they care about, and file delay compensation only after they approve that specific trip.
 
 Do not put personal data (name, personnummer, ticket number, phone, address, email) in this skill. Those live in the assistant's memory for the person you are helping.
 
 ## When this applies
 
-Swedish regional trains branded Mälartåg. Default corridor is Stockholm C (`cst`), Uppsala C (`u`), Gävle C (`gä`). The same recipe works for another corridor if the user names other station signatures.
+Swedish regional trains branded Mälartåg. Default scope is **all stations** in [`stations.json`](./stations.json) (name, Trafikverket `code`, claim `id`). The user may narrow that to a subset in assistant memory; if they have not, watch the whole catalog.
+
+## Station catalog
+
+`stations.json` is the source of truth. Each entry:
+
+- `name`: display name (e.g. `Uppsala C`)
+- `code`: Trafikverket location signature used in the announcements API (e.g. `U`, `Cst`, `Gä`)
+- `id`: UUID used in delay-compensation claims
+
+Look up claim `departureStationId` / `arrivalStationId` by `code` or `name`. Treat codes as case-insensitive. URL-encode codes when calling the API (`Gä`, `Söö`, `Äkb`, …).
+
+If a signature is missing from the catalog, still show the alert, but do not file a claim until the station can be mapped to an `id`.
 
 ## Data sources
 
@@ -25,7 +37,7 @@ Announcements API (reference implementation):
 - Related code: https://github.com/emanuelbodin/trafikverket-api
 - Cancelled: `GET /api/announcements/departures/{station}?canceled=true`
 - Delayed: `GET /api/announcements/departures/{station}?delayed=true`
-- Stations: `u`, `cst`, `gä` (URL-encode `gä`)
+- `{station}` is a catalog `code`
 
 Each item looks like Trafikverket `TrainAnnouncement`: `advertisedTrainIdent`, `advertisedTimeAtLocation`, `estimatedTimeAtLocation`, `canceled`, `fromName`, `toName`, `toLocation`, `viaToLocation`, `productInformation`, `operator`, `otherInformation`, `trackAtLocation`.
 
@@ -33,13 +45,15 @@ Mälartåg filter: `productInformation` description contains `Mälartåg`. Opera
 
 If the proxy is down, fall back to Trafikverket's open `TrainAnnouncement` API and filter the same way. Tell the user about an outage once, not on every poll.
 
-## Corridor filter
+## Station filter
 
-Keep a train only if both ends of the relevant hop are in the corridor set (Stockholm C / Uppsala C / Gävle C), using `fromName`, `toName`, via locations, and signatures `Cst`, `U`, `Gä`.
+Watched set = the user's subset if they named one, otherwise every `code` in `stations.json`.
 
-Drop Mälartåg whose destination is outside the corridor (Eskilstuna, Norrköping, Sala, Örebro, Arboga, Tierp, etc.) unless the user is actually travelling that hop.
+Keep a train if it is Mälartåg and it touches the watched set: `locationSignature`, `fromName`/`toName`, or via locations match a catalog name or code.
 
 Deduplicate the same train seen at several stations. Key: `trainNumber|advertisedLocalDate|from|to`.
+
+When polling, fetch cancelled + delayed for each watched station. If the watched set is the full catalog, you may skip tiny stops that never originate trains and still catch those trains at hubs they pass, but prefer fetching every watched code unless rate limits force a hub subset (then say so).
 
 ## Alerting
 
@@ -57,15 +71,11 @@ Delay minutes: difference between estimated and advertised time at that station,
 
 Swedish regional delay compensation is typically available from about 20 minutes late *to the arrival station*. Do not offer a claim just because the departure was 20 minutes late if arrival is still under the threshold.
 
-If a corridor train is cancelled, or delayed by 20+ minutes at arrival, offer to file and ask for explicit approval. Never POST a claim until the user approves that trip.
+If a watched train is cancelled, or delayed by 20+ minutes at arrival, offer to file and ask for explicit approval. Never POST a claim until the user approves that trip.
 
 Endpoint: `POST https://evf-regionsormland.preciocloudapp.net/api/Claims`
 
-Station UUIDs:
-
-- Uppsala (`u`): `cf09cbb1-fd82-4b83-9c09-87bc8fc2f018`
-- Stockholm C (`cst`): `f4d25596-a9f9-41a1-b200-713439d92fc4`
-- Gävle C (`gä`): `c1ed2e95-5cc2-4e9d-a89b-fb27f01ad527`
+Resolve station UUIDs from `stations.json`. Example: Uppsala C `U` → `cf09cbb1-fd82-4b83-9c09-87bc8fc2f018`.
 
 Body shape (fill customer and ticket from assistant memory, not from this file):
 
@@ -74,7 +84,7 @@ Body shape (fill customer and ticket from assistant memory, not from this file):
   "id": "00000000-0000-0000-0000-000000000000",
   "confirmDuplicate": null,
   "payoutOption": "SUS",
-  "arrivalStationId": "<to station uuid>",
+  "arrivalStationId": "<to station uuid from stations.json>",
   "claimReceipts": [],
   "comment": "",
   "customer": {
@@ -94,7 +104,7 @@ Body shape (fill customer and ticket from assistant memory, not from this file):
     "surName": ""
   },
   "departureDate": "<ISO-8601 UTC, e.g. 2026-02-10T07:00:00.000Z>",
-  "departureStationId": "<from station uuid>",
+  "departureStationId": "<from station uuid from stations.json>",
   "refundType": {
     "id": "00000000-0000-0000-0000-000000000000",
     "name": "Payment via Swedbank SUS"
@@ -117,7 +127,7 @@ If the user has given a period ticket number and an expiry date, remind them the
 Store per-user, never in the skill:
 
 - API base URL (default: the reference implementation above)
-- Corridor station signatures
+- Optional watched-station codes (default: all of `stations.json`)
 - Period ticket number and expiry
 - Customer payload for claims
 - Poll cadence
