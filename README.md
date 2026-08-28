@@ -25,11 +25,11 @@ Reference implementation: [trafikverket-api](https://github.com/emanuelbodin/tra
 Base URL: `https://trafikverket-api-production.up.railway.app`
 
 ```
-GET /api/announcements/departures/{station}?canceled=true
-GET /api/announcements/departures/{station}?delayed=true
+GET /api/announcements/departures/{station}?from={from}&to={to}&canceled=true
+GET /api/announcements/departures/{station}?from={from}&to={to}&delayed=true
 ```
 
-`{station}` is a `code` from `stations.json`.
+`{station}` is a `code` from `stations.json`. `from` and `to` are ISO-8601 date-times with offset (example: `2026-08-28T00:00:00+02:00`). Always send them; omitting both applies no advertised-time filter. Default window: last 24 hours through the next 12 hours, Europe/Stockholm.
 
 Compensation: `POST https://evf-regionsormland.preciocloudapp.net/api/Claims`
 
