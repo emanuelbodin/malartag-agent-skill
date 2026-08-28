@@ -1,38 +1,42 @@
 # Mälartåg agent skill
 
-Agent skill för att bevaka **inställda och försenade Mälartåg** på en stationkorridor (standard: Stockholm C, Uppsala C, Gävle C), varna när något nytt händer, och söka förseningersättning **först efter uttryckligt godkännande**.
+An agent skill for watching **cancelled and delayed Mälartåg** on the full Mälartåg network (or a station subset the user named), alerting only when something new happens, and filing delay compensation **after explicit approval**.
 
-Inga personuppgifter hör hemma här. Biljettnummer, namn, personnummer och liknande ligger i assistentens minne.
+No personal data belongs here. Ticket numbers, names, and national IDs live in the assistant's memory.
 
-## Vad den gör
+## What it does
 
-1. Hämtar inställda och försenade avgångar från ett Trafikverket-announcements-API.
-2. Filtrerar till Mälartåg (`productInformation` = Mälartåg, operator oftast `TDEV`) på den valda korridoren.
-3. Tystnar om inget nytt hänt. Pingar bara vid ny inställelse eller försening, eller om läget blivit märkbart sämre.
-4. Föreslår ersättningsansökan vid inställt tåg eller ca 20+ min sen *ankomst*. Postar aldrig utan godkännande.
+1. Fetches cancelled and delayed departures from a Trafikverket announcements API.
+2. Keeps Mälartåg (`productInformation` = Mälartåg, operator usually `TDEV`) that touch the watched stations.
+3. Stays silent when nothing new happened. Pings only on a new cancellation or delay, or if the situation got materially worse.
+4. Offers a compensation claim when a train is cancelled or about 20+ minutes late *on arrival*. Never posts without approval.
 
-Receptet ligger i [`SKILL.md`](./SKILL.md) (Agent Skills-format).
+The recipe is in [`SKILL.md`](./SKILL.md) ([Agent Skills](https://agentskills.io) format). Station names, Trafikverket codes, and claim UUIDs are in [`stations.json`](./stations.json).
+
+## Stations
+
+Default scope is every station in `stations.json` (Arboga, Arlanda C, Eskilstuna C, …, Örebro Södra). An assistant can narrow that list in its own memory.
+
+`code` is the announcements API path segment (URL-encode non-ASCII, e.g. `Gä`). `id` is the UUID for `departureStationId` / `arrivalStationId` on a claim.
 
 ## API
 
-Referensimplementation: [trafikverket-api](https://github.com/emanuelbodin/trafikverket-api)  
-Bas-URL: `https://trafikverket-api-production.up.railway.app`
+Reference implementation: [trafikverket-api](https://github.com/emanuelbodin/trafikverket-api)  
+Base URL: `https://trafikverket-api-production.up.railway.app`
 
 ```
 GET /api/announcements/departures/{station}?canceled=true
 GET /api/announcements/departures/{station}?delayed=true
 ```
 
-`station`: `u` (Uppsala C), `cst` (Stockholm C), `gä` (Gävle C, URL-encoda).
+`{station}` is a `code` from `stations.json`.
 
-Ersättning: `POST https://evf-regionsormland.preciocloudapp.net/api/Claims`
+Compensation: `POST https://evf-regionsormland.preciocloudapp.net/api/Claims`
 
-## Installera
+## Install
 
-Klona eller peka din assistent på den här `SKILL.md` (Cursor / Claude / andra klienter som läser [Agent Skills](https://agentskills.io)).
+Point your assistant at this `SKILL.md` (Cursor, Claude, or any client that reads [Agent Skills](https://agentskills.io)). Keep `stations.json` next to it.
 
-I Grok Bot / Cursor kan du också spara innehållet som en skill i assistentens bibliotek.
+## License
 
-## Licens
-
-MIT. Se [LICENSE](./LICENSE).
+MIT. See [LICENSE](./LICENSE).
