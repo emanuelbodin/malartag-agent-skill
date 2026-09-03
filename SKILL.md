@@ -64,7 +64,7 @@ Fill customer and ticket from assistant memory, not from this file. Resolve stat
     "streetNameAndNumber": "",
     "surName": ""
   },
-  "departureDate": "<ISO-8601 UTC, e.g. 2026-02-10T07:00:00.000Z>",
+  "departureDate": "<advertised local clock as …T22:12:00.000Z, e.g. 2026-08-31T22:12:00.000Z>",
   "departureStationId": "<from station uuid from stations.json>",
   "refundType": {
     "id": "00000000-0000-0000-0000-000000000000",
@@ -77,7 +77,7 @@ Fill customer and ticket from assistant memory, not from this file. Resolve stat
 }
 ```
 
-`ticketType` 1 is a period ticket. `departureDate` is the advertised departure in UTC. Follow this template (`trainNumber` 0) unless the API requires the advertised train ident.
+`ticketType` 1 is a period ticket. `departureDate` is the **advertised local clock time in Europe/Stockholm**, written as an ISO-8601 string ending in `Z` (e.g. a 22:12 departure → `2026-08-31T22:12:00.000Z`). **Do not convert to UTC.** EVF displays the clock fields as-is; converting 22:12+02:00 to `20:12Z` made the claim show the wrong train time. Follow this template (`trainNumber` 0) unless the API requires the advertised train ident.
 
 ## After posting
 
