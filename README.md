@@ -23,6 +23,8 @@ The recipe is in [`SKILL.md`](./SKILL.md) ([Agent Skills](https://agentskills.io
 POST https://evf-regionsormland.preciocloudapp.net/api/Claims
 ```
 
+`departureDate` must be the advertised **local** clock time in Europe/Stockholm as `…T22:12:00.000Z` — do **not** convert to UTC.
+
 ## Install
 
 Point your assistant at this `SKILL.md` (Cursor, Claude, or any client that reads [Agent Skills](https://agentskills.io)). Keep `stations.json` next to it.
